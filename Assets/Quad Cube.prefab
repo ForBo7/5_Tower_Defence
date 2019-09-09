@@ -195,6 +195,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6437974767665980811}
+  - component: {fileID: 2059954724}
+  - component: {fileID: 1561110071619427838}
   m_Layer: 0
   m_Name: Quad Cube
   m_TagString: Untagged
@@ -211,7 +213,7 @@ Transform:
   m_GameObject: {fileID: 3846220543731423653}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 5139104801356746111}
   - {fileID: 6593464302231540447}
@@ -222,6 +224,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2059954724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846220543731423653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c60bb554b0d664baf9badd85acdfbba6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridSize: 10
+--- !u!114 &1561110071619427838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3846220543731423653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c79b7e2b748045bdb0bfb6c2de2be13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5355016282166790385
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,7 +700,7 @@ TextMesh:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8543333238742430766}
-  m_Text: (xxx, zzz)
+  m_Text: (0, 0)
   m_OffsetZ: 0
   m_CharacterSize: 0.008
   m_LineSpacing: 1

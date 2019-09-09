@@ -21,7 +21,10 @@ public class SnapEditor : MonoBehaviour
         transform.position = new Vector3(snapPos.x, 0f, snapPos.z);
 
         textMesh = GetComponentInChildren<TextMesh>();
-        textMesh.text = "(" + snapPos.x / gridSizeF + ", " + snapPos.z / gridSizeF + ")";
 
+        string cubeLabel = "(" + snapPos.x / gridSizeF + ", " + snapPos.z / gridSizeF + ")";
+        textMesh.text = cubeLabel;
+
+        gameObject.name = "Cube " + cubeLabel;
     }
 }
