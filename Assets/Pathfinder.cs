@@ -8,7 +8,11 @@ public class Pathfinder : MonoBehaviour
     [SerializeField] Waypoint startingPoint;
     [SerializeField] Waypoint endingPoint;
 
+    bool isExecuting = true;
+
     Dictionary<Vector2Int, Waypoint> grid = new Dictionary<Vector2Int, Waypoint>();
+    Queue<Waypoint> queue = new Queue<Waypoint>();
+
     Vector2Int[] directions =
     {
         Vector2Int.up,
@@ -21,7 +25,29 @@ public class Pathfinder : MonoBehaviour
     void Start()
     {
         LoadBlocks();
-        ExploreNeighbors();
+        Pathfind();
+        //ExploreNeighbors();
+    }
+
+    private void Pathfind()
+    {
+        queue.Enqueue(startingPoint);
+
+        while(queue.Count > 0)
+        {
+            var searchCenter = queue.Dequeue();
+            if (searchCenter != endingPoint)
+            {
+                print("Searching from" + searchCenter.name);
+            }
+            else
+            {
+                isExecuting = false;
+                print("Stopping search. Start and end points are same.");
+            }
+
+            print("Stopping pathfinding");
+        }
     }
 
     private void ExploreNeighbors()
