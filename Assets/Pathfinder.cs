@@ -26,44 +26,63 @@ public class Pathfinder : MonoBehaviour
     {
         LoadBlocks();
         Pathfind();
-        //ExploreNeighbors();
     }
 
     private void Pathfind()
     {
         queue.Enqueue(startingPoint);
 
-        while(queue.Count > 0)
+        while(queue.Count > 0 && isExecuting)
         {
             var searchCenter = queue.Dequeue();
-            if (searchCenter != endingPoint)
-            {
-                print("Searching from" + searchCenter.name);
-            }
-            else
-            {
-                isExecuting = false;
-                print("Stopping search. Start and end points are same.");
-            }
+            print("Searching from" + searchCenter.name);
+            HaltIfEndFound(searchCenter);
+            ExploreNeighbors(searchCenter);
+            searchCenter.isExplored = true;
+        }
+        print("Pathfinding finished?");
+    }
 
-            print("Stopping pathfinding");
+    private void HaltIfEndFound(Waypoint searchCenter)
+    {
+        if (searchCenter == endingPoint)
+        {
+            isExecuting = false;
+            print("Stopping search. Start and end points are same.");
         }
     }
 
-    private void ExploreNeighbors()
+    private void ExploreNeighbors(Waypoint searchCenter)
     {
+        if (!isExecuting)
+        {
+            return; // since the while loop only checks it condintion once it loops back to the very top.
+        }
+
         foreach (Vector2Int direction in directions)
         {
-            Vector2Int explorePointCoords = startingPoint.GetGridPosition() + direction;
+            Vector2Int neighborCoords = searchCenter.GetGridPosition() + direction;
             try
             {
-                grid[explorePointCoords].SetTopColor(Color.magenta);
+                QueueNewNeighbors(neighborCoords);
             }
             catch
             {
                 // do nothing for now
             }
         }
+    }
+
+    private void QueueNewNeighbors(Vector2Int neighborCoords)
+    {
+        Waypoint neighbor = grid[neighborCoords];
+        if (!neighbor.isExplored)
+        {
+            grid[neighborCoords].SetTopColor(Color.magenta);
+            queue.Enqueue(neighbor);
+            print("Queueing " + neighbor);
+        }
+        
     }
 
     private void LoadBlocks()
