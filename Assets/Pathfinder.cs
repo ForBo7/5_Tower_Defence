@@ -10,6 +10,8 @@ public class Pathfinder : MonoBehaviour
 
     bool isExecuting = true;
 
+    Waypoint searchCenter;
+
     Dictionary<Vector2Int, Waypoint> grid = new Dictionary<Vector2Int, Waypoint>();
     Queue<Waypoint> queue = new Queue<Waypoint>();
 
@@ -34,16 +36,16 @@ public class Pathfinder : MonoBehaviour
 
         while(queue.Count > 0 && isExecuting)
         {
-            var searchCenter = queue.Dequeue();
+            searchCenter = queue.Dequeue();
             print("Searching from" + searchCenter.name);
-            HaltIfEndFound(searchCenter);
-            ExploreNeighbors(searchCenter);
+            HaltIfEndFound();
+            ExploreNeighbors();
             searchCenter.isExplored = true;
         }
         print("Pathfinding finished?");
     }
 
-    private void HaltIfEndFound(Waypoint searchCenter)
+    private void HaltIfEndFound()
     {
         if (searchCenter == endingPoint)
         {
@@ -52,7 +54,7 @@ public class Pathfinder : MonoBehaviour
         }
     }
 
-    private void ExploreNeighbors(Waypoint searchCenter)
+    private void ExploreNeighbors()
     {
         if (!isExecuting)
         {
@@ -76,13 +78,12 @@ public class Pathfinder : MonoBehaviour
     private void QueueNewNeighbors(Vector2Int neighborCoords)
     {
         Waypoint neighbor = grid[neighborCoords];
-        if (!neighbor.isExplored)
+        if (!neighbor.isExplored && !queue.Contains(neighbor))
         {
-            grid[neighborCoords].SetTopColor(Color.magenta);
             queue.Enqueue(neighbor);
             print("Queueing " + neighbor);
+            neighbor.exploredFrom = searchCenter;
         }
-        
     }
 
     private void LoadBlocks()

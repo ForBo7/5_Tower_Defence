@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Waypoint : MonoBehaviour
 {
+    // publics are ok in this class since it is a data class
+
     public bool isExplored = false;
+    public Waypoint exploredFrom;
 
     Vector2Int gridPos;
 
@@ -23,16 +26,18 @@ public class Waypoint : MonoBehaviour
         );
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void SetTopColor(Color color)
     {
         MeshRenderer topMeshRenderer = transform.Find("Top").GetComponent<MeshRenderer>();
         topMeshRenderer.material.color = color;
+    }
+
+    private void Update()
+    {
+        if(exploredFrom.isExplored)
+        {
+            SetTopColor(Color.magenta);
+        }
     }
 
 }
