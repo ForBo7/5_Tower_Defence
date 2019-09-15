@@ -30,7 +30,6 @@ public class SnapEditor : MonoBehaviour
     private void LabelWaypoint()
     {
         TextMesh textMesh;
-        int gridSize = waypoint.GetGridSize();
         textMesh = GetComponentInChildren<TextMesh>();
         string cubeLabel = "(" + waypoint.GetGridPosition().x+ ", " + waypoint.GetGridPosition().y+ ")";
         textMesh.text = cubeLabel;

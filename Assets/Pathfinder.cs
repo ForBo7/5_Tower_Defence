@@ -15,6 +15,8 @@ public class Pathfinder : MonoBehaviour
     Dictionary<Vector2Int, Waypoint> grid = new Dictionary<Vector2Int, Waypoint>();
     Queue<Waypoint> queue = new Queue<Waypoint>();
 
+    List<Waypoint> path = new List<Waypoint>();
+
     Vector2Int[] directions =
     {
         Vector2Int.up,
@@ -23,26 +25,40 @@ public class Pathfinder : MonoBehaviour
         Vector2Int.right,
     };
 
-    // Start is called before the first frame update
-    void Start()
+    public List<Waypoint> GetPath()
     {
         LoadBlocks();
-        Pathfind();
+        BreadthFirstSearch();
+        FormPath();
+        return path;
     }
 
-    private void Pathfind()
+
+
+    private void FormPath()
+    {
+        path.Add(endingPoint);
+        Waypoint previousPoint = endingPoint.exploredFrom;
+        while (previousPoint != startingPoint)
+        {
+            path.Add(previousPoint);
+            previousPoint = previousPoint.exploredFrom;
+        }
+        path.Add(startingPoint);
+        path.Reverse();
+    }
+
+    private void BreadthFirstSearch()
     {
         queue.Enqueue(startingPoint);
 
         while(queue.Count > 0 && isExecuting)
         {
             searchCenter = queue.Dequeue();
-            print("Searching from" + searchCenter.name);
             HaltIfEndFound();
             ExploreNeighbors();
             searchCenter.isExplored = true;
         }
-        print("Pathfinding finished?");
     }
 
     private void HaltIfEndFound()
@@ -64,13 +80,9 @@ public class Pathfinder : MonoBehaviour
         foreach (Vector2Int direction in directions)
         {
             Vector2Int neighborCoords = searchCenter.GetGridPosition() + direction;
-            try
+            if(grid.ContainsKey(neighborCoords))
             {
                 QueueNewNeighbors(neighborCoords);
-            }
-            catch
-            {
-                // do nothing for now
             }
         }
     }
@@ -81,7 +93,6 @@ public class Pathfinder : MonoBehaviour
         if (!neighbor.isExplored && !queue.Contains(neighbor))
         {
             queue.Enqueue(neighbor);
-            print("Queueing " + neighbor);
             neighbor.exploredFrom = searchCenter;
         }
     }
