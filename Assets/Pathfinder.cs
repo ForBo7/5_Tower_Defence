@@ -23,6 +23,10 @@ public class Pathfinder : MonoBehaviour
         Vector2Int.down,
         Vector2Int.left,
         Vector2Int.right,
+        new Vector2Int(1, 1), // up right
+        new Vector2Int(-1, 1), // up left
+        new Vector2Int(-1, 1), // down right
+        new Vector2Int(-1, -1) // down left
     };
 
     public List<Waypoint> GetPath()
